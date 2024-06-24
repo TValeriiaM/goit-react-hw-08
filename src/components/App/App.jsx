@@ -11,7 +11,8 @@ const NotFoundPage = lazy(() => import('../../pages/NotFoundPage/NotFoundPage'))
 import Layout from '../Layout/Layout';
 import { selectIsRefreshing } from "../../redux/auth/selectors";
 import { refreshUser } from "../../redux/auth/operations";
-
+import RestrictedRout from "../RestrictedRout";
+import PrivateRout from "../PrivateRout";
 
 export default function App() {
   const isRefreshing = useSelector(selectIsRefreshing)
@@ -19,10 +20,6 @@ export default function App() {
   useEffect(() => {
     dispatch(refreshUser())
   }, [dispatch])
-
-  if (isRefreshing) {
-    return null;
-  }
   
   return isRefreshing ? (<Loader />) :
     (
@@ -30,9 +27,9 @@ export default function App() {
       <Suspense fallback={<Loader/>}>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/register" element={<RegistrationPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/contacts" element={<ContactsPage />} />
+        <Route path="/register" element={<RestrictedRout component={<RegistrationPage/>} redirectTo="/" />} />
+        <Route path="/login" element={<RestrictedRout component={<LoginPage/>} redirectTo="/contacts" />} />
+        <Route path="/contacts" element={<PrivateRout component={<ContactsPage/>} redirectTo="/login" />} />
         <Route path="*" element={<NotFoundPage />}/>
       </Routes>
       </Suspense>

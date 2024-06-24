@@ -14,13 +14,13 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-const auchPersistConfig = {
-  key: "contactList",
+const authPersistConfig = {
+  key: "auth",
   storage,
   whitelist: ["token"],
 };
 
-const persistedAuthReducer = persistReducer(auchPersistConfig, authReducer);
+const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 
 export const store = configureStore({
   reducer: {

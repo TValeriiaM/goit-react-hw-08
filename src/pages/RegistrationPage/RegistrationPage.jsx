@@ -1,9 +1,10 @@
 import RegistrationForm from "../../components/RegistrationForm/RegistrationForm";
+import css from "./RegistrationPage.module.css"
 
 export default function RegistrationPage() {
     return (
         <div>
-            <h3>Sign up</h3>
+            <h2 className={css.title}>Sign up</h2>
             <RegistrationForm/>
         </div>
     )

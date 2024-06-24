@@ -1,10 +1,10 @@
 import { useId } from 'react';
 import * as Yup from 'yup';
-// import toast from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 import { useDispatch } from 'react-redux'; 
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import css from "./RegistrationForm.module.css"
-import { registration } from '../../redux/auth/operations';
+import { register } from '../../redux/auth/operations';
 
 
 const addContactValidation = Yup.object().shape({
@@ -28,23 +28,23 @@ export default function RegistrationForm () {
   const dispatch = useDispatch();
 
   const handleSubmit = (values, actions) => {
-      dispatch(registration(values))
-    //   .unwrap()
-    //   .then((data) => {
-    //     console.log(data)
-    //     toast.success('Your registration is successful!');
-    // })
-    // .catch((error)=> {
-    //     toast.error('Registration failed. Probably, your email address has already been registered');
-    //     console.log(error)
-    // });
+      dispatch(register(values))
+      .unwrap()
+      .then((data) => {
+        console.log(data)
+        toast.success('Your registration is successful!');
+    })
+    .catch((error)=> {
+        toast.error('Registration failed. Probably, your email address has already been registered');
+        console.log(error)
+    });
       actions.resetForm();
     }
     
-      
-
-    return <Formik
-      initialValues={{name: '', email: '', password: ''}}
+    return (<div>
+        <Toaster/>
+        <Formik
+      initialValues={{name: "", email: "", password: ""}}
       onSubmit={handleSubmit}
       validationSchema={addContactValidation}   
     >
@@ -69,6 +69,7 @@ export default function RegistrationForm () {
            </button>
         </Form>
       
-     </Formik>
-   
+        </Formik>
+        </div>
+    )
  }
