@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { logIn } from '../../redux/auth/operations';
 import css from "./LoginForm.module.css"
+import toast, { Toaster } from 'react-hot-toast';
 
 const addContactValidation = Yup.object().shape({
     email: Yup.string()
@@ -22,11 +23,19 @@ export default function LoginForm () {
   const dispatch = useDispatch();
 
   const handleSubmit =(values, actions) => {
-        dispatch(logIn(values));
+      dispatch(logIn(values))
+        .unwrap()
+        .then(() => {})
+        .catch((error)=> {
+        toast.error('Login failed. Check your email address or password');
+        console.log(error)
+    });
         actions.resetForm();
       }
 
-    return <Formik
+    return (<div>
+        <Toaster/>
+        <Formik
       initialValues={{ email: "", password: ""}}
       onSubmit={handleSubmit}
       validationSchema={addContactValidation}   
@@ -48,5 +57,6 @@ export default function LoginForm () {
         </Form>
       
      </Formik>
-   
+    </div>
+    )
  }

@@ -73,6 +73,10 @@ const sliseAuth = createSlice({
         state.user = action.payload;
         state.isLoggedIn = true;
         state.isRefreshing = false;
+      })
+      .addCase(refreshUser.rejected, (state, action) => {
+        state.isRefreshing = false;
+        state.isError = action.payload;
       }),
 });
 

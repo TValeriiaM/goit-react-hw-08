@@ -9,8 +9,7 @@ export default function Navigation() {
     return (
         <nav className={css.nav}>
             <NavLink className={css.link} to="/">Home</NavLink>
-            {isLogedIn && (<NavLink to="/contacts">Contacts</NavLink>)}
-            
+            {isLogedIn && (<NavLink className={css.link} to="/contacts">Contacts</NavLink>)}    
         </nav>
     )
 }

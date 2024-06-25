@@ -30,8 +30,7 @@ export default function RegistrationForm () {
   const handleSubmit = (values, actions) => {
       dispatch(register(values))
       .unwrap()
-      .then((data) => {
-        console.log(data)
+      .then(() => {
         toast.success('Your registration is successful!');
     })
     .catch((error)=> {
